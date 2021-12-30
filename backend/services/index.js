@@ -1,0 +1,4 @@
+exports.userService = require("./user.service");
+exports.authService = require("./auth.service");
+//exports.courseService = require("./course.service");
+//exports.quizService = require("./quiz.service");

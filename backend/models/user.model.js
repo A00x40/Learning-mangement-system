@@ -50,8 +50,8 @@ const userSchema = new mongoose.Schema(
         } ,
 
         // (admin/customer)
-        type :  {
-            type : Boolean,
+        userType :  {
+            type : String,
             required : [true , 'please enter admin or customer']
         } 
     } ,
