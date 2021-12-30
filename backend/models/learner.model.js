@@ -1,23 +1,23 @@
 const mongoose = require('mongoose')
 const { User } = require('./user.model')
 
-const professorSchema = new mongoose.Schema(
+const learnerSchema = new mongoose.Schema(
     {
         courses : [{
             type : mongoose.Schema.Types.ObjectId,
-            ref : "Course"
+            ref : "Course",
         }]
     } ,
     {
         toJSON: {
-          virtuals: true
+            virtuals: true
         } ,
         toObject: {
-          virtuals: true
+            virtuals: true
         } ,
         discriminatorKey: 'type'
     }
 )
 
-const Professor = User.discriminator('Professor', professorSchema)
-module.exports = { Professor, professorSchema }
+const Learner = User.discriminator('Learner', learnerSchema);
+module.exports = { Learner, learnerSchema };

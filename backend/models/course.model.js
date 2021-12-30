@@ -15,13 +15,17 @@ const courseSchema = new mongoose.Schema(
         } ,
         instructor: {
             type : mongoose.Schema.Types.ObjectId,
-            ref : "Professor",
+            ref : "Instructor",
             required: true
         } ,
-        students : [{
+        syllabus: [{
+            type: String,
+            required: true
+        }] ,
+        learners : [{
             type : mongoose.Schema.Types.ObjectId,
-            ref : "Student"
-        }]
+            ref : "Learner"
+        }] ,
     } ,
     {
         toJSON: {
@@ -30,6 +34,7 @@ const courseSchema = new mongoose.Schema(
         toObject: {
           virtuals: true
         } ,
+        timestamps: true
     }
 )
 
