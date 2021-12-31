@@ -1,4 +1,20 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const { resultsSchema } = require('./results.model');
+
+var courseLearnerSchema = new mongoose.Schema({
+    learner : { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "Learner", 
+        required: true
+    } ,
+    progress : {
+        type: Number, 
+        minmum: 0,
+        maxmum: 100,
+        default: 0 
+    } ,
+    //results : [resultsSchema]
+}, { _id: false });
 
 const courseSchema = new mongoose.Schema(
     {
@@ -7,11 +23,13 @@ const courseSchema = new mongoose.Schema(
             minlength: 1,
             maxlength: 50,
             required :[ true , 'please enter course name'],
+            unique: [ true , 'course name must be unique'],
             trim:true
         } ,
         imgUrl: {
             type: String, 
             //match: /\.(png|jpg|jpeg|svg)$/, 
+            default: "default"
         } ,
         instructor: {
             type : mongoose.Schema.Types.ObjectId,
@@ -22,10 +40,7 @@ const courseSchema = new mongoose.Schema(
             type: String,
             required: true
         }] ,
-        learners : [{
-            type : mongoose.Schema.Types.ObjectId,
-            ref : "Learner"
-        }] ,
+        scores: [courseLearnerSchema]
     } ,
     {
         toJSON: {
@@ -33,10 +48,9 @@ const courseSchema = new mongoose.Schema(
         } ,
         toObject: {
           virtuals: true
-        } ,
-        timestamps: true
+        } 
     }
-)
+);
 
-const Course = mongoose.model('Course', courseSchema)
-module.exports = { Course, courseSchema }
+const Course = mongoose.model('Course', courseSchema);
+module.exports = { Course, courseSchema };

@@ -3,10 +3,18 @@ const { User } = require('./user.model');
 
 const instructorSchema = new mongoose.Schema(
     {
+        ownedCourses : [{
+            type : mongoose.Schema.Types.ObjectId,
+            ref : "Course",
+            unique: [true , "User can't own a course he already owns (no duplicates)"]
+        }],
+
         courses : [{
             type : mongoose.Schema.Types.ObjectId,
-            ref : "Course"
+            ref : "Course",
+            unique: [true , "User can't enroll in a course he already is in (no duplicates)"]
         }]
+        
     } ,
     {
         toJSON: {
