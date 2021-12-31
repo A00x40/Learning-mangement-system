@@ -39,3 +39,16 @@ exports.instructorLogin = async (req,res,next) => {
         user : loggedUser 
     });
 };
+
+
+// User Update Profile
+exports.updateUserProfile = async (req,res,next) => {
+    updatedUser = await userService.updateUserProfile(req.body.userId, req.body.info);
+    res.status(200).json(updatedUser);
+};
+
+// Admin Actions
+exports.getUsers = async (req,res,next) => {
+    allUsers = await userService.getUsers();
+    res.status(200).json(allUsers);
+};

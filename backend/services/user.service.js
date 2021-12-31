@@ -38,8 +38,27 @@ exports.getInstructorLogin = async (receivedEmail, receivedPassword) => {
     return user;
 }
 
-exports.getUserById = async (userId)=>{
-    let user = await User.find({userId}, {password:0, passwordConfirm: 0} );
-    user= user.toJSON();
-    return user;
+//
+exports.updateUserProfile = async (userId, updatedInfo) => {
+    
+    if(updatedInfo.hasOwnProperty("type")) {
+        
+        let user = await User.findOneAndUpdate(userId, { $set : updatedInfo } , {
+            new: true,
+        });
+        return user
+    }
+    else {
+        let user = await User.findOneAndUpdate( { _id: userId } , updatedInfo, {
+            new: true,
+            upsert: true
+        });
+        return user
+    }
+}
+
+// Admin
+exports.getUsers = async () => {
+    let users = await User.find({})
+    return users
 }

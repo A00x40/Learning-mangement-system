@@ -22,7 +22,11 @@ router.route("/instructor/login")
 
 
 // Update Profile
-router.route("/learner/update")
-    .post(catchAsync(userController.learnerLogin));
-    
+router.route("/update")
+    .post(catchAsync(userController.updateUserProfile));
+
+// Admin Actions
+router.route("/getall")
+    .get(catchAsync(userController.getUsers));
+
 module.exports = router;
