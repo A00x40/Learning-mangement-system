@@ -1,5 +1,6 @@
 const express = require("express");
-const cors = require('cors')
+const cors = require('cors');
+const router = require('../api/v1');
 
 // App & Middleware
 const app = express()
@@ -22,5 +23,8 @@ const corsOptions = {
     methods: ['GET', 'POST', 'DELETE']
 };
 app.use(cors(corsOptions))
+
+// routes
+app.use('/api/v1', router);
 
 module.exports = app

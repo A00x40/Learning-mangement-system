@@ -11,11 +11,11 @@ const answerSchema = new mongoose.Schema({
         required: true,
         unique: true 
     } ,
-    upvoteCount:  {
+    upvoteCount: {
         type: Number,
         default: 0
     } 
 });
 
-const Answer = mongoose.model('Answer', answerSchema)
-module.exports = { Answer, answerSchema }
+const Answer = mongoose.model('Answer', answerSchema);
+module.exports = { Answer, answerSchema };
