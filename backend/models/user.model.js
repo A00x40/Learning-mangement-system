@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 
 const userSchema = new mongoose.Schema(
-    
     {
         // (Should be unique)
         username : {
@@ -50,10 +49,21 @@ const userSchema = new mongoose.Schema(
         } ,
 
         // (admin/customer)
-        userType :  {
+        type :  {
             type : String,
-            required : [true , 'please enter admin or customer']
-        } 
+            default: "customer"
+        } ,
+
+        key :  {
+            type : Number,
+            required : [true , 'please enter learner or instructor']
+        } ,
+
+        courses : [{
+            type : mongoose.Schema.Types.ObjectId,
+            ref : "Course",
+            unique: [true , "User can't enroll in a course he already is in (no duplicates)"]
+        }]
     } ,
     {
         toJSON: {

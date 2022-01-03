@@ -1,27 +1,24 @@
 const mongoose = require('mongoose');
 
 const resultsSchema = new mongoose.Schema({
-    course : { 
+    quiz : { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Course',
+        ref: 'Quiz',
         required: true
     } ,
-    learner: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Learner',
-        required: true
-    } ,
-    marks : {
-        type: String, 
-        default: 0 
-    } ,
-    progress : {
+    score : { 
         type: Number, 
-        min: 0,
-        max: 100,
-        default: 0 
+        required: true 
+    } ,
+    maximum : { 
+        type: Number, 
+        required: true 
+    } ,
+    grade : { 
+        type: String,
+        required: true 
     }
 });
 
-const Results = mongoose.model('Course', resultsSchema)
-module.exports = { Results, resultsSchema }
+const Results = mongoose.model('Results', resultsSchema);
+module.exports = { Results, resultsSchema };

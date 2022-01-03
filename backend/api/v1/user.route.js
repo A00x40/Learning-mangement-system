@@ -7,26 +7,28 @@ const catchAsync = require("../../utils/catchAsync");
 const router = express.Router();
 
 // Sign Up
-router.route("/learner/signup")
-    .post(catchAsync(userController.addLearner));
-
-router.route("/instructor/signup")
-    .post(catchAsync(userController.addInstructor));
+router.route("/signup")
+    .post(catchAsync(userController.addUser));
 
 // Sign In (Authentication)
-router.route("/learner/login")
-    .post(catchAsync(userController.learnerLogin));
+router.route("/login")
+    .post(catchAsync(userController.getUserLogin));
 
-router.route("/instructor/login")
-    .post(catchAsync(userController.instructorLogin));
+// Update User Profile
+router.route("/:id/update")
+    .post(catchAsync(userController.updateUserProfile));
+
+// Get all users
+router.route("/get")
+    .get(catchAsync(userController.getUsers));
+
+// Admin Change User Roles 
+router.route("/:id/role")
+    .post(catchAsync(userController.changeUserRole));
 
 
 // Update Profile
 router.route("/update")
     .post(catchAsync(userController.updateUserProfile));
-
-// Admin Actions
-router.route("/getall")
-    .get(catchAsync(userController.getUsers));
 
 module.exports = router;

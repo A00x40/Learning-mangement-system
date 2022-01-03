@@ -22,11 +22,7 @@ const postSchema = new mongoose.Schema({
         unique: true 
     } ,
     answers: [answerSchema] ,
-    bestAnswer : { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Answer',
-        default: null
-    } ,   
+     
     addedAt: { 
         type: Date, 
         default: Date.now 

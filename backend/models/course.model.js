@@ -40,7 +40,7 @@ const courseSchema = new mongoose.Schema(
             type: String,
             required: true
         }] ,
-        scores: [courseLearnerSchema]
+        //scores: [courseLearnerSchema]
     } ,
     {
         toJSON: {

@@ -11,10 +11,10 @@ const answerSchema = new mongoose.Schema({
         required: true,
         unique: true 
     } ,
-    upvoteCount: {
-        type: Number,
-        default: 0
-    } 
+    addedAt: { 
+        type: Date, 
+        default: Date.now 
+    }
 });
 
 const Answer = mongoose.model('Answer', answerSchema);

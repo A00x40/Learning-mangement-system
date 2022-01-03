@@ -3,19 +3,14 @@ const { authService } = require('./../services');
 const statusMessageError = require("../utils/statusMessageError");
 
 // Sign Up
-exports.addLearner =  async (req,res,next) => {
-    const learner = await userService.addLearner(req.body);
-    res.status(200).json(learner);
-}
-
-exports.addInstructor =  async (req,res,next) => {
-    const instructor = await userService.addInstructor(req.body);
-    res.status(200).json(instructor);
+exports.addUser =  async (req,res,next) => {
+    const user = await userService.addUser(req.body);
+    res.status(200).json(user);
 }
 
 // Authenticatin
-exports.learnerLogin = async (req,res,next)=>{
-    loggedUser = await userService.getLearnerLogin(req.body.email,req.body.password);
+exports.getUserLogin = async (req,res,next)=>{
+    loggedUser = await userService.getUserLogin(req.body.info);
     if(loggedUser == null){
         return next (new statusMessageError(401,"incorrect username or password or different user type"));
     }
@@ -26,29 +21,31 @@ exports.learnerLogin = async (req,res,next)=>{
         user : loggedUser 
     });
 };
-
-exports.instructorLogin = async (req,res,next) => {
-    loggedUser = await userService.getInstructorLogin(req.body.email, req.body.password);
-    if(loggedUser == null){
-        return next (new statusMessageError(401,"incorrect username or password or different user type"));
-    }
-
-    const myToken = authService.createToken(loggedUser._id);
-    res.status(200).json({
-        token : myToken,
-        user : loggedUser 
-    });
-};
-
 
 // User Update Profile
 exports.updateUserProfile = async (req,res,next) => {
-    updatedUser = await userService.updateUserProfile(req.body.userId, req.body.info);
+    let updatedUser = await userService.updateUserProfile(req.params.id, req.body.info);
+    if(Object.keys(updatedUser).length === 0) {
+        return next (new statusMessageError(401,"only admins can change roles"));
+    }
     res.status(200).json(updatedUser);
 };
 
-// Admin Actions
+// Get Users
 exports.getUsers = async (req,res,next) => {
     allUsers = await userService.getUsers();
     res.status(200).json(allUsers);
+};
+
+// User Update Profile
+exports.changeUserRole = async (req,res,next) => {
+    let updatedUser = await userService.changeUserRole(req.params.id, req.body.id, req.body.key);
+    
+    if(updatedUser == null) {
+        return next (new statusMessageError(401,"user has courses so he can't be upgraded"));
+    }
+    else if(updatedUser == {}) {
+        return next (new statusMessageError(401,"role update request not made by an admin"));
+    }
+    res.status(200).json(updatedUser);
 };

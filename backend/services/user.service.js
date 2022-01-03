@@ -1,64 +1,62 @@
 const { User } = require('./../models/user.model');
-const { Learner } = require('./../models/learner.model');
-const { Instructor } = require('./../models/instructor.model');
 
-//
-exports.addLearner = async (newLearner) => {
-    let userLearner = await Learner.create(newLearner)
-    userLearner = userLearner.toJSON();
-    delete userLearner.password ;  
-    return userLearner;
+// Sign Up
+exports.addUser = async (user) => {
+    let newuser = await User.create(user);
+    return newuser.toJSON();
 }
 
-exports.addInstructor = async (newInstructor) => {
-    let userInstructor = await Instructor.create(newInstructor)
-    userInstructor = userInstructor.toJSON();
-    delete userInstructor.password;  
-    return userInstructor;
+/* Login Info
+{
+    email: receivedEmail,
+    password: receivedPassword
 }
+*/
 
-//
-exports.getLearnerLogin = async (receivedEmail, receivedPassword) => {
-    let info = {
-        email: receivedEmail,
-        password: receivedPassword
-    }
-    
-    let user = await Learner.findOne(info).exec();
+exports.getUserLogin = async (info) => {   
+    let user = await User.findOne(info).exec();
     return user;
 }
 
-exports.getInstructorLogin = async (receivedEmail, receivedPassword) => {
-    let info = {
-        email: receivedEmail,
-        password: receivedPassword
-    }
 
-    let user = await Instructor.findOne(info).exec();
-    return user;
+// Update Profile
+exports.updateUserProfile = async (id, info) => {
+    // Users can't update their keys (learner, instructor)
+    if(info.hasOwnProperty("key")) return {};
+  
+    let user = await User.findOneAndUpdate(id, { $set : info } , {
+        new: true,
+    });
+    return user
 }
 
-//
-exports.updateUserProfile = async (userId, updatedInfo) => {
-    
-    if(updatedInfo.hasOwnProperty("type")) {
-        
-        let user = await User.findOneAndUpdate(userId, { $set : updatedInfo } , {
-            new: true,
-        });
-        return user
-    }
-    else {
-        let user = await User.findOneAndUpdate( { _id: userId } , updatedInfo, {
-            new: true,
-            upsert: true
-        });
-        return user
-    }
-}
-
-// Admin
+// Get all users
 exports.getUsers = async () => {
     let users = await User.find({})
     return users
+}
+
+// Role Change
+exports.changeUserRole = async (adminId, id, key) => {
+
+    // Unchanged Role number for admins 
+    if(adminId == id) return {}
+
+    // Check the request is made by an admin
+    let user = await User.findOne({ _id: adminId }).exec();
+    if(user.type != "admin") return {}
+
+    let updatedUser = await User.findOneAndUpdate(
+        {
+            _id: id,
+            courses: { $size: 0 } 
+        }, 
+        {
+            key
+        },
+        {
+            new: true
+        }
+    );
+    return updatedUser;
 }
