@@ -44,7 +44,7 @@ exports.changeUserRole = async (req,res,next) => {
     if(updatedUser == null) {
         return next (new statusMessageError(401,"user has courses so he can't be upgraded"));
     }
-    else if(updatedUser == {}) {
+    else if(Object.keys(updatedUser) == 0) {
         return next (new statusMessageError(401,"role update request not made by an admin"));
     }
     res.status(200).json(updatedUser);

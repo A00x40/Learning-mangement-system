@@ -1,20 +1,4 @@
 const mongoose = require('mongoose');
-const { resultsSchema } = require('./results.model');
-
-var courseLearnerSchema = new mongoose.Schema({
-    learner : { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "Learner", 
-        required: true
-    } ,
-    progress : {
-        type: Number, 
-        minmum: 0,
-        maxmum: 100,
-        default: 0 
-    } ,
-    //results : [resultsSchema]
-}, { _id: false });
 
 const courseSchema = new mongoose.Schema(
     {
@@ -40,7 +24,6 @@ const courseSchema = new mongoose.Schema(
             type: String,
             required: true
         }] ,
-        //scores: [courseLearnerSchema]
     } ,
     {
         toJSON: {

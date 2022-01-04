@@ -3,51 +3,62 @@ const { User } = require("../models/user.model");
 const { Post } = require("../models/post.model");
 const { Answer } = require("../models/answer.model");
 
-// Add Course to instructor created or to learner enrolled courses
-
+// Add Course to instructor courses
 exports.createCourse = async(newCourse, user) => {
+    // Learners don't create courses
+    if(user.type == 0) return {}
+
+    newCourse.instructor = user._id
+
     let course = await Course.create(newCourse);
-    
     course = course.toJSON();
-    await updateUserCourses(user, course);
+
+    await User.findOneAndUpdate(
+        {
+            _id: user._id
+        },
+        {
+            $push: { courses: course._id }
+        }
+    );
     return course;
 };
 
+// Add Course to learner courses
 exports.enrollInCourse = async (course, user) => {    
-    let updatedCourse = await Course.findById({ _id: course._id});
-    return updatedCourse
+    // Instructors don't enroll in courses
+    if(user.type == 1) return {};
+
+    let enrolledUser = await User.findOneAndUpdate(
+        {
+            _id: user._id
+        },
+        {
+            $push: { courses: course._id }
+        }
+    );
+    return enrolledUser
 };
 
-// 
+ 
 //Add new question with empty answers
-exports.addQAThread = async (newPost) => { 
-    let question = await Post.create(newPost);
-    
-    return question.toJSON();   
+exports.addQuestionThread = async (newPost) => { 
+    return await Post.create(newPost);
 };
 
-//Get all questions of a course to display in q&a section
-exports.getQAs = async (course) => { 
-    let questions = await Post.find({course})
-    
-    return questions;   
+// Add a reply answer to a question post
+exports.addAnswer = async (newAnswer) => {  
+    return await Answer.create(newAnswer);
 };
 
-//Add a reply answer to a question post
-exports.addQAReply = async (postId, newReply) => {  
-    let reply = await Answer.create(newReply);
-    
-    reply = reply.toJSON();
-    await Post.findOneAndUpdate({_id: postId}, { $push: { answers: reply._id } });
-    return reply;
+// Get all questions of a course to display in q&a section
+exports.getQuestions = async (course) => { 
+    return await Post.findMany({_id: course._id}).exec();   
+};
+
+// Get all answers of a question
+exports.getAnswers = async (question) => { 
+    return await Answer.findMany({question}).exec();
 };
 
 
-// Up or Down Vote & modify best answer
-exports.updateQAReply = async (replyId, score) => { 
-    let reply = await Answer.findOneAndUpdate({_id : replyId}, {upvoteCount: score} ,{
-        new: true
-    });
-    
-    return reply;
-};
