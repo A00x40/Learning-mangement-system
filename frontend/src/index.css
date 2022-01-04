@@ -1,13 +1,257 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap");
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+ 
+  font-family: Arial, sans-serif;;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--white);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  /* min-height: 100%; */
+  margin: 0;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+
+:root {
+  /* --onyx: #36393B;
+  --green_eagle: #1A535C;
+  --cream: #FFFC99;
+  --light_sea_green: #03B5AA; */
+  --white: #ffff;
+  --offwhite: #f9f9fa;
+  --whitt: #f9f9f9;
+  --dark_blue: #017a9b;
+  --light_blue: #1f39ff;
+  --darker: #1f2932;
+  /*--warning: #FFC700;
+  --blue: #0094FF;
+  --dim: #AAAAAA;
+  --red: #F21D00;
+  --green: #04C600;
+  --magenta: #FA02FF;*/
+}
+
+:root {
+  --sidebar_width: 200px;
+  --header_height: 50px;
+}
+.color_black {
+  color: black;
+}
+
+.font0 {
+  font-size: 25px;
+  /* color: white; */
+  color: black;
+}
+
+.font00 {
+  font-size: 32px;
+  /* color: white; */
+  color: black;
+}
+
+.font1 {
+  font-size: 18px;
+  /* color: white; */
+  color: black;
+}
+
+.font2 {
+  font-size: 16px;
+  /* color: white; */
+  color: black;
+}
+
+
+.font3 {
+  font-size: 14px;
+  /* color: white; */
+  color: black;
+}
+
+.font4 {
+  font-size: 12px;
+  /* color: white; */
+  color: black;
+}
+
+.font4 {
+  font-size: 12px;
+  /* color: white; */
+  color: black;
+}
+
+.font0_white {
+  font-size: 25px;
+  color: white;
+  /* color: black; */
+}
+
+.font00_white {
+  font-size: 32px;
+  color: white;
+  /* color: black; */
+}
+
+.font1_white {
+  font-size: 18px;
+  color: white;
+  /* color: black; */
+}
+
+.font2_white {
+  font-size: 16px;
+  color: white;
+  /* color: black; */
+}
+
+.font3_white {
+  font-size: 14px;
+  color: white;
+  /* color: black; */
+}
+
+.font4_white {
+  font-size: 12px;
+  color: white;
+  /* color: black; */
+}
+
+.font4_white {
+  font-size: 12px;
+  color: white;
+  /* color: black; */
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.center_text {
+  text-align: center;
+}
+
+.no_text_decoration {
+  text-decoration: none;
+}
+
+.flex_align_center {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.flex_justify_center {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.flex_center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input_button {
+  width: min(100%, 100px);
+  width: 141px;
+  height: 44px;
+  /* background-color: var(--cream); */
+  /* background-color: #403233; */
+  background-color: transparent; 
+  border: none;
+  /* border-radius: 4px; */
+  /* color: black; */
+  color: white;
+  
+  cursor: pointer;
+  margin: 0 auto;
+
+  /*font2 bold*/
+  font-size: 16px;
+  /* color: white; */
+  font-weight: bold;
+}
+
+.input_button {
+  /* width: min(100%, 100px); */
+  width: 141px;
+  height: 44px;
+  /* background-color: var(--cream); */
+  /* background-color: #403233; */
+  background-color: var(--dark_blue); 
+  border: none;
+  /* border-radius: 4px; */
+  /* color: black; */
+  color: white;
+  
+  cursor: pointer;
+  margin: 0 auto;
+
+  /*font2 bold*/
+  font-size: 16px;
+  /* color: white; */
+  /* font-weight: bold; */
+}
+
+.textarea {
+  resize: none;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  background-color: var(--darker);
+  padding: 5px;
+  min-height: 150px;
+}
+
+.remove_user_agent_stylesheet{
+  border: none;
+  padding: 10px;
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.no_margin {
+  margin: 0px;
+}
+
+.add_padding {
+  padding: 10px;
+}
+
+.list_style {
+  list-style: none;
+}
+
+.cursor_pointer {
+  cursor: pointer;
+}
+
+.course_card {
+  width: min(326px, 100%);
+  height: 231px;
+  padding: 10px;
+  background-color: var(--darker);
+  margin: 5px;
+  text-decoration: none;
+}
+
+.red {
+  color: red;
+}
+
+.flex1 {
+  flex: 1;
+}
+
