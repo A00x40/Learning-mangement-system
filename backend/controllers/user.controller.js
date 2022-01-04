@@ -13,7 +13,7 @@ exports.addUser =  async (req,res,next) => {
 
 // Authenticatin
 exports.getUserLogin = async (req,res,next)=>{
-    let loggedUser = await userService.getUserLogin(req.body.info);
+    let loggedUser = await userService.getUserLogin(req.body.email, req.body.password);
     if(loggedUser == null){
         return next (new statusMessageError(401,"incorrect username or password"));
     }

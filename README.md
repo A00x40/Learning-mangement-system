@@ -34,6 +34,12 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+
 ## BackEnd Scripts
 cd ./backend
 
+### `npm start`
+Runs the backend with nodemon for development.
+
+### `npm run serve`
+Runs the backend using node.

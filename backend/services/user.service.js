@@ -2,7 +2,7 @@ const { User } = require('../models/user.model');
 
 // Sign Up
 exports.addUser = async (user) => {
-    let user = await User.findOne({
+    let newuser = await User.findOne({
         $or: [{
             email: user.email
         },
@@ -11,11 +11,11 @@ exports.addUser = async (user) => {
         }
     ]});
 
-    if (user) {
+    if (newuser) {
         return null;
     }
 
-    let newuser = await User.create(user);
+    newuser = await User.create(user);
     newuser = newuser.toJSON();
     delete newuser.password ;
 
@@ -28,8 +28,15 @@ exports.addUser = async (user) => {
     password: receivedPassword
 }
 */
-exports.getUserLogin = async (info) => {   
-    let user = await User.findOne(info);
+exports.getUserLogin = async (email, password) => {   
+    let user = await User.findOne({
+        $and: [{
+            email
+        },
+        {
+            password
+        }
+    ]});
     return user;
 }
 
