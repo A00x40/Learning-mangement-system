@@ -1,47 +1,59 @@
 const { courseService } = require('./../services');
 const statusMessageError = require("../utils/statusMessageError");
-//
+
 exports.createCourse = async (req,res,next) => {
-    let course = await courseService.createCourse(req.body.course, req.body.user);
-    if(Object.keys(course).length == 0) {
-        return next (new statusMessageError(401,"Learner can't create a course"));
+    if(req.body.user.type == 0){
+        return next (new statusMessageError(403, "You do not have the permission to perform this action"));
     }
+
+    let course = await courseService.createCourse(req.body.course, req.body.user);
     res.status(200).json(course);
 }
 
-//
 exports.enrollInCourse = async (req,res,next) => {
-    let course = await courseService.enrollInCourse(req.body.course, req.body.user);
+    if(req.body.user.type == 1){
+        return next (new statusMessageError(403, "You do not have the permission to perform this action"));
+    }
 
-    if(Object.keys(course).length == 0) {
-        return next (new statusMessageError(401,"Course doesn't exist or Instructor tried to enroll"));
+    if(req.body.user.courses.includes(req.body.course._id)){
+        return next (new statusMessageError(400, "User already enrolled"));
+    }
+
+    let course = await courseService.enrollInCourse(req.body.course, req.body.user);
+    if(!course) {
+        return next (new statusMessageError(400, "Invalid Course Id"));
     } 
     
     res.status(200).json(course);
 }
 
+
 //
-exports.addQAThread  = async (req,res,next) => {
-    const question = await courseService.addQAThread(req.body);
+exports.addQuestionThread  = async (req,res,next) => {
+    const question = await courseService.addQuestionThread(req.body);
+    if(!question) {
+        return next (new statusMessageError(400, "Invalid Course Id"));
+    } 
 
     res.status(200).json(question);
 }
 
-exports.getQAs = async (req,res,next) => {
-    const allQuestions = await courseService.getQAs(req.body.course);
-
+exports.getQuestions = async (req,res,next) => {
+    const allQuestions = await courseService.getQuestions(req.params.id);
+    if(!allQuestions) {
+        return next (new statusMessageError(400, "Invalid Course Id"));
+    } 
     res.status(200).json(allQuestions);
 }
 
-exports.addQAReply = async (req,res,next) => {
-    const reply = await courseService.addQAReply(req.body.post, req.body.reply);
+exports.addAnswer = async (req,res,next) => {
+    const reply = await courseService.addAnswer(req.body.question, req.body.reply);
 
     res.status(200).json(reply);
 }
 
-exports.updateQAReply = async (req,res,next) => {
-    const reply = await courseService.updateQAReply(req.body.reply, req.body.score);
+exports.getAnswers = async (req,res,next) => {
+    const reply = await courseService.getAnswers(req.body.question);
 
     res.status(200).json(reply);
 }
-

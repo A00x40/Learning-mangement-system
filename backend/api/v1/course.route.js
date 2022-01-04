@@ -10,24 +10,19 @@ const router = express.Router();
 router.route("/create")
     .post(catchAsync(courseController.createCourse));
 
-//
 router.route("/enroll")
     .post(catchAsync(courseController.enrollInCourse));
 
-//
 router.route("/qa/post")
-.post(catchAsync(courseController.addQAThread));
+.post(catchAsync(courseController.addQuestionThread));
 
-//
-router.route("/qa/getall")
-    .get(catchAsync(courseController.getQAs));
+router.route("/:id/qa/all")
+    .get(catchAsync(courseController.getQuestions));
 
-//
 router.route("/qa/reply")
-.post(catchAsync(courseController.addQAReply));
+.post(catchAsync(courseController.addAnswer));
 
-//
 router.route("/qa/update")
 .post(catchAsync(courseController.updateQAReply));
-    
+
 module.exports = router;

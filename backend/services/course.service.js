@@ -5,9 +5,6 @@ const { Answer } = require("../models/answer.model");
 
 // Add Course to instructor courses
 exports.createCourse = async(newCourse, user) => {
-    // Learners don't create courses
-    if(user.type == 0) return {}
-
     newCourse.instructor = user._id
 
     let course = await Course.create(newCourse);
@@ -25,16 +22,17 @@ exports.createCourse = async(newCourse, user) => {
 };
 
 // Add Course to learner courses
-exports.enrollInCourse = async (course, user) => {    
-    // Instructors don't enroll in courses
-    if(user.type == 1) return {};
-
+exports.enrollInCourse = async (course, user) => { 
+    
     let enrolledUser = await User.findOneAndUpdate(
         {
             _id: user._id
         },
         {
             $push: { courses: course._id }
+        },
+        {
+            new: true
         }
     );
     return enrolledUser
@@ -52,13 +50,13 @@ exports.addAnswer = async (newAnswer) => {
 };
 
 // Get all questions of a course to display in q&a section
-exports.getQuestions = async (course) => { 
-    return await Post.findMany({_id: course._id}).exec();   
+exports.getQuestions = async (id) => { 
+    return await Post.find({_id: id});   
 };
 
 // Get all answers of a question
 exports.getAnswers = async (question) => { 
-    return await Answer.findMany({question}).exec();
+    return await Answer.find({_id: question._id});
 };
 
 

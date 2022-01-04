@@ -1,9 +1,9 @@
-require('dotenv').config()
-const app = require('./app');
 const mongoose = require('mongoose');
+const app = require('./app');
+const config = require('config');
 
-const port = process.env.PORT || 4000;
-const db = process.env.DB.replace("password", process.env.DB_PASSWORD);
+const port = config.get("PORT") || 4000;
+const db = config.get("DB").replace("password", config.get("DB_PASSWORD"));
 
 mongoose
     .connect( db , {

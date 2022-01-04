@@ -17,13 +17,13 @@ const courseSchema = new mongoose.Schema(
         } ,
         instructor: {
             type : mongoose.Schema.Types.ObjectId,
-            ref : "Instructor",
+            ref : "User",
             required: true
         } ,
         syllabus: [{
-            type: String,
-            required: true
-        }] ,
+            name: String,
+            link: String
+        }] 
     } ,
     {
         toJSON: {
