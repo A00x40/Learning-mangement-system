@@ -5,6 +5,9 @@ const statusMessageError = require("../utils/statusMessageError");
 // Sign Up
 exports.addUser =  async (req,res,next) => {
     const user = await userService.addUser(req.body);
+    if(!user) {
+        return res.status(400).send('That user already exisits!');
+    }
     res.status(200).json(user);
 }
 

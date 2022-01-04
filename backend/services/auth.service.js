@@ -7,6 +7,6 @@ exports.createToken = (id, userType)=>{
         type : userType
     };
 
-    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+    const accessToken = jwt.sign(user, config.get('ACCESS_TOKEN_SECRET'));
     return accessToken;
 }
