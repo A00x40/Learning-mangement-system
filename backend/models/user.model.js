@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema(
         } ,
 
         birthdate : {
-            type : Date,
+            type : String,
             required : [true , 'please enter your birthdate'] 
         } ,  
 
@@ -48,15 +48,10 @@ const userSchema = new mongoose.Schema(
             unique : [true , 'this email is already used']
         } ,
 
-        // (admin/customer)
+        // learner 0 - instructor 1 - admin 2 
         type :  {
-            type : String,
-            default: "customer"
-        } ,
-
-        key :  {
             type : Number,
-            required : [true , 'please enter learner or instructor']
+            required : [true , 'please enter learner or instructor'],
         } ,
 
         courses : [{

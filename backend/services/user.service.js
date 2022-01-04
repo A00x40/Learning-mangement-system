@@ -22,7 +22,7 @@ exports.getUserLogin = async (info) => {
 // Update Profile
 exports.updateUserProfile = async (id, info) => {
     // Users can't update their keys (learner, instructor)
-    if(info.hasOwnProperty("key")) return {};
+    if(info.hasOwnProperty("type")) return {};
   
     let user = await User.findOneAndUpdate(id, { $set : info } , {
         new: true,
@@ -44,7 +44,7 @@ exports.changeUserRole = async (adminId, id, key) => {
 
     // Check the request is made by an admin
     let user = await User.findOne({ _id: adminId }).exec();
-    if(user.type != "admin") return {}
+    if(user.type != 2) return {}
 
     let updatedUser = await User.findOneAndUpdate(
         {
