@@ -1,9 +1,10 @@
-require('dotenv').config()
-const app = require('./app');
 const mongoose = require('mongoose');
+const app = require('./app');
+const config = require('config');
+const startScript = require('../../script');
 
-const port = process.env.PORT || 4000;
-const db = process.env.DB.replace("password", process.env.DB_PASSWORD);
+const port = config.get("PORT") || 4000;
+const db = config.get("DB").replace("password", config.get("DB_PASSWORD"));
 
 mongoose
     .connect( db , {
@@ -12,6 +13,9 @@ mongoose
 })
 .then(() => {
     console.info(`Successfully connected to MongoAtlas`);
+    /*startScript().then(() => {
+        console.info(`Loaded Start Script`);
+    });*/
 })
 .catch(error => {
     console.error('Error connecting to database: ', error);

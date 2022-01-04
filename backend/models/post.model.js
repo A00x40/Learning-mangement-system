@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { answerSchema } = require('./answer.model');
 
 const postSchema = new mongoose.Schema({
     course : { 
@@ -21,7 +20,6 @@ const postSchema = new mongoose.Schema({
         required: true,
         unique: true 
     } ,
-    answers: [answerSchema] ,
      
     addedAt: { 
         type: Date, 
