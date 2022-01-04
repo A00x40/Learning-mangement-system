@@ -23,7 +23,7 @@ router.route("/get")
     .get(catchAsync(userController.getUsers));
 
 // Admin Change User Roles 
-router.route("/:id/role")
+router.route("/role")
     .post(catchAsync(userController.changeUserRole));
 
 

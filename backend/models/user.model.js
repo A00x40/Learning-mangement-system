@@ -56,8 +56,7 @@ const userSchema = new mongoose.Schema(
 
         courses : [{
             type : mongoose.Schema.Types.ObjectId,
-            ref : "Course",
-            unique: [true , "User can't enroll in a course he already is in (no duplicates)"]
+            ref : "Course"
         }]
     } ,
     {

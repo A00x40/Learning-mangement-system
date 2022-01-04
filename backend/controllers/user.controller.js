@@ -10,9 +10,9 @@ exports.addUser =  async (req,res,next) => {
 
 // Authenticatin
 exports.getUserLogin = async (req,res,next)=>{
-    loggedUser = await userService.getUserLogin(req.body.info);
+    let loggedUser = await userService.getUserLogin(req.body.info);
     if(loggedUser == null){
-        return next (new statusMessageError(401,"incorrect username or password or different user type"));
+        return next (new statusMessageError(401,"incorrect username or password"));
     }
 
     const myToken = authService.createToken(loggedUser._id);
@@ -24,10 +24,11 @@ exports.getUserLogin = async (req,res,next)=>{
 
 // User Update Profile
 exports.updateUserProfile = async (req,res,next) => {
+    if(req.body.info.hasOwnProperty("type")) {
+        return next (new statusMessageError(403, "You do not have the permission to perform this action"));
+    };
+
     let updatedUser = await userService.updateUserProfile(req.params.id, req.body.info);
-    if(Object.keys(updatedUser).length === 0) {
-        return next (new statusMessageError(401,"only admins can change roles"));
-    }
     res.status(200).json(updatedUser);
 };
 
@@ -39,13 +40,14 @@ exports.getUsers = async (req,res,next) => {
 
 // User Update Profile
 exports.changeUserRole = async (req,res,next) => {
-    let updatedUser = await userService.changeUserRole(req.params.id, req.body.id, req.body.key);
+    if(req.body.user._id == req.body.id || req.body.user.type != 2) {
+        return next (new statusMessageError(403, "You do not have the permission to perform this action"));
+    }
+
+    let updatedUser = await userService.changeUserRole(req.body.id, req.body.type);
+    if(!updatedUser) {
+        return next (new statusMessageError(400, "Invalid User Id"));
+    }
     
-    if(updatedUser == null) {
-        return next (new statusMessageError(401,"user has courses so he can't be upgraded"));
-    }
-    else if(Object.keys(updatedUser) == 0) {
-        return next (new statusMessageError(401,"role update request not made by an admin"));
-    }
     res.status(200).json(updatedUser);
 };
