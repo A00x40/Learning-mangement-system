@@ -27,8 +27,6 @@ exports.enrollInCourse = async (req,res,next) => {
     res.status(200).json(course);
 }
 
-
-//
 exports.addQuestionThread  = async (req,res,next) => {
     const question = await courseService.addQuestionThread(req.body);
     if(!question) {
@@ -56,4 +54,26 @@ exports.getAnswers = async (req,res,next) => {
     const reply = await courseService.getAnswers(req.body.question);
 
     res.status(200).json(reply);
+}
+
+exports.addActivity = async (req,res,next) => {
+    const path = req.body.file.path.replace(/\\/g, "/");
+    // Video Link
+    if(Object.keys(req.body.file) == 2) {
+        let activity = await courseService.addActivity(req.body.course, 
+            {
+                filename: req.body.file.originalname,
+                path
+            }
+        );
+        res.status(200).json(activity);
+    } else {
+        let activity = await courseService.addActivity(req.body.course, 
+            {
+                filename: req.body.file.originalname,
+                path: null
+            }
+        );
+        res.status(200).json(activity);
+    }
 }

@@ -1,10 +1,11 @@
 const express = require("express");
+const upload = require('../../middleware/activity');
 const { courseController } = require("../../controllers");
 const catchAsync = require("../../utils/catchAsync");
 
-//import { authenticate } from "../../midllewares/auth";
 
 const router = express.Router();
+
 
 // Create Course
 router.route("/create")
@@ -24,5 +25,11 @@ router.route("/qa/reply")
 
 router.route("/qa/update")
 .post(catchAsync(courseController.updateQAReply));
+
+router.route("/activity/pdf")
+.post(upload, catchAsync(courseController.addActivity));
+
+router.route("/activity/video")
+.post(catchAsync(courseController.addActivity));
 
 module.exports = router;

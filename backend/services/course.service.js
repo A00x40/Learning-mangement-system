@@ -2,6 +2,7 @@ const { Course } = require("../models/course.model");
 const { User } = require("../models/user.model");
 const { Post } = require("../models/post.model");
 const { Answer } = require("../models/answer.model");
+const { Activity } = require("../models/activity.model");
 
 // Add Course to instructor courses
 exports.createCourse = async(newCourse, user) => {
@@ -59,4 +60,10 @@ exports.getAnswers = async (question) => {
     return await Answer.find({_id: question._id});
 };
 
-
+exports.addActivity = async (course, file) => {
+    const newFile = await Activity.create({
+        name: file.filename,
+        path: file.path,
+        course: course._id
+    });
+}
