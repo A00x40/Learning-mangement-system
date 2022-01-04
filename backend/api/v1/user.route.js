@@ -2,8 +2,6 @@ const express = require("express");
 const { userController } = require("../../controllers");
 const catchAsync = require("../../utils/catchAsync");
 
-//import { authenticate } from "../../midllewares/auth";
-
 const router = express.Router();
 
 // Sign Up
@@ -30,5 +28,9 @@ router.route("/role")
 // Update Profile
 router.route("/update")
     .post(catchAsync(userController.updateUserProfile));
+
+// Get User Courses
+router.route("/:id/courses")
+    .get(catchAsync(userController.getUserCourses));
 
 module.exports = router;

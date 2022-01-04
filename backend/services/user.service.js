@@ -1,4 +1,5 @@
 const { User } = require('../models/user.model');
+const { Course } = require('../models/course.model');
 
 // Sign Up
 exports.addUser = async (user) => {
@@ -53,6 +54,15 @@ exports.updateUserProfile = async (id, info) => {
 exports.getUsers = async () => {
     let users = await User.find({})
     return users
+}
+
+// Get user Courses
+exports.getUserCourses = async (userId) => {
+    let courses = await Course.find({
+        instructor: userId
+    });
+    
+    return courses
 }
 
 // Role Change

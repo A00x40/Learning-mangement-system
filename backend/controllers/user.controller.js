@@ -41,6 +41,13 @@ exports.getUsers = async (req,res,next) => {
     res.status(200).json(allUsers);
 };
 
+// Get User Courses
+exports.getUserCourses = async (req,res,next) => {
+    courses = await userService.getUserCourses(req.params.id);
+    
+    res.status(200).json(courses);
+};
+
 // User Update Profile
 exports.changeUserRole = async (req,res,next) => {
     if(req.body.user._id == req.body.id || req.body.user.type != 2) {

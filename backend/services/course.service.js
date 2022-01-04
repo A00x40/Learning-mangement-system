@@ -4,6 +4,12 @@ const { Post } = require("../models/post.model");
 const { Answer } = require("../models/answer.model");
 const { Activity } = require("../models/activity.model");
 
+// Get Courses
+exports.getCourses = async(limit, skip) => {
+    let courses = await Course.find({}, {limit, skip});
+    return courses;
+};
+
 // Add Course to instructor courses
 exports.createCourse = async(newCourse, user) => {
     newCourse.instructor = user._id

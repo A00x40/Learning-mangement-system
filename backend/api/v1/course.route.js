@@ -6,8 +6,9 @@ const catchAsync = require("../../utils/catchAsync");
 
 const router = express.Router();
 
+router.route("/all")
+    .get(catchAsync(courseController.getCourses));
 
-// Create Course
 router.route("/create")
     .post(catchAsync(courseController.createCourse));
 

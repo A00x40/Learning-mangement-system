@@ -1,6 +1,10 @@
 const { courseService } = require('./../services');
 const statusMessageError = require("../utils/statusMessageError");
 
+exports.getCourses= async (req,res,next) => {
+    let courses = await courseService.getCourses(req.query.limit, req.query.offset);
+    res.status(200).json(courses);
+}
 exports.createCourse = async (req,res,next) => {
     if(req.body.user.type == 0){
         return next (new statusMessageError(403, "You do not have the permission to perform this action"));
